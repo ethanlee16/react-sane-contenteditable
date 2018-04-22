@@ -27,6 +27,7 @@ const defaultProps = {
   onBlur: () => {},
   onKeyDown: () => {},
   onPaste: () => {},
+  doNotUpdate: false,
 };
 
 class ContentEditable extends Component {
@@ -39,6 +40,9 @@ class ContentEditable extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    if (this.props.doNotUpdate) {
+      return;
+    }
     if (nextProps.content !== this.sanitiseValue(this.state.value)) {
       this.setState({ value: nextProps.content }, this.forceUpdate);
     }
